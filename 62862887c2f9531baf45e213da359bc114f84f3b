@@ -1,0 +1,2 @@
+lisa-addressed:
+- Commit 2 of the W1-S1 trial plan (lisa-design): ran `opa fmt -w policies` (spaces around `!=` in mock_default_branch.rego), removed the "DELIBERATE `opa fmt` ISSUE" comment, and replaced the README paragraph about the deliberate issue with one line on the CI workflow. Local: opa fmt --list --fail, opa check --strict, opa test (3/3) pass.
