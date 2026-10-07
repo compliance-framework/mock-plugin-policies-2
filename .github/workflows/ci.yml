@@ -3,7 +3,8 @@ name: ci
 on:
   pull_request:
     # edited: re-check the PR title (ci-common.yml's pr-title job) when it changes.
-    types: [opened, edited, synchronize, reopened]
+    # labeled, unlabeled: re-run release-checks (version-guard reads the PR's labels).
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
   push:
     branches: [main]
 
@@ -11,7 +12,7 @@ permissions: {}
 
 jobs:
   ci:
-    uses: compliance-framework/workflows/.github/workflows/ci-policies.yml@a94553bdc479fac47fbea7febbf57dcb615dbc87
+    uses: compliance-framework/workflows/.github/workflows/ci-policies.yml@084cc5d5ee6a40455f84b4f3108cfb254654ae28
     permissions:
       actions: read
       contents: read
@@ -19,13 +20,19 @@ jobs:
       security-events: write
     secrets: inherit
 
+  release-checks:
+    # Runs only on release-please-- PR branches; skipped (counts as passing) elsewhere.
+    uses: compliance-framework/workflows/.github/workflows/release-checks.yml@084cc5d5ee6a40455f84b4f3108cfb254654ae28
+    permissions:
+      contents: read
+
   notify:
-    needs: [ci]
+    needs: [ci, release-checks]
     if: failure()
-    uses: compliance-framework/workflows/.github/workflows/notify-failure.yml@a94553bdc479fac47fbea7febbf57dcb615dbc87
+    uses: compliance-framework/workflows/.github/workflows/notify-failure.yml@084cc5d5ee6a40455f84b4f3108cfb254654ae28
     with:
       # Must equal the ref notify-failure.yml is called at (a called workflow can't see it).
-      workflows-ref: a94553bdc479fac47fbea7febbf57dcb615dbc87
+      workflows-ref: 084cc5d5ee6a40455f84b4f3108cfb254654ae28
     permissions:
       actions: read
       contents: read
