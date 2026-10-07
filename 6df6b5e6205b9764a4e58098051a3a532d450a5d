@@ -7,3 +7,6 @@ pass 1 fixes:
 lisa-design:
 - Update to the DELIBERATE fmt issue: after pass 1 the offending line is `object.get(input, ["repository", "default_branch"], "")!="main"` (still the only `opa fmt` diff; verified by formatting a copy: one line differs). A missing default_branch now counts as a violation.
 - METADATA custom.controls / custom.schedule hold mock values (mock-ctrl-001, "* * * * *").
+
+lisa-selfreview:
+pass 2 (strict): approve, no findings. Considered and dismissed: REGO-DATA-002 for the literal "main" (it is the check's definition in a disposable mock; moving it to data.json would add a data key + README table for no benefit). The single opa fmt diff is deliberate (see lisa-design).
