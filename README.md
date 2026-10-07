@@ -6,7 +6,4 @@ Mock repo for developing CCF release automation. Not a product.
 
 - `policies/`: one Rego package (`compliance_framework.mock_default_branch`) with its `_test.rego` tests.
 - `make test` runs `opa test policies`; `make build` writes `dist/bundle.tar.gz`.
-
-`policies/mock_default_branch.rego` deliberately contains one `opa fmt` issue, so the shared
-policy CI's format check fails on this repo. `opa check` and `opa test` still pass. The S1
-adoption PR fixes it.
+- `.github/workflows/ci.yml` runs the shared policy CI (`compliance-framework/workflows` `ci-policies.yml`) on pull requests and pushes to `main`; `ci / required` is the status check to require.
