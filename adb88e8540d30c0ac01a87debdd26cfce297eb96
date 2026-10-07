@@ -1,0 +1,6 @@
+lisa-design:
+- All shared refs (ci-policies, notify-failure + workflows-ref, release-checks, release-please, release-policies, preview) pinned to the same full SHA 084cc5d5ee6a40455f84b4f3108cfb254654ae28 (head of workflows#12); bump them together.
+- release-please-config.json copies every key of workflows' release-please/defaults.json verbatim (release-please has no remote extends; the shared workflow warns on drift); packages "." uses release-type simple, so version.txt (seeded 0.0.0) is the versioned file.
+- ci.yml pull_request types add labeled/unlabeled: release-checks' version-guard reads labels from the event (README). notify needs both ci and release-checks.
+- preview.yml uses kind policies, on-main false (README: policy repos want PR previews only); triggers per README (opened/synchronize/reopened/labeled).
+- release.yml grants contents: read + packages: write (README: release-policies needs read, not write).
