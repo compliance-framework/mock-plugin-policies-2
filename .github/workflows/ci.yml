@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  pull_request:
+    # edited: re-check the PR title (ci-common.yml's pr-title job) when it changes.
+    types: [opened, edited, synchronize, reopened]
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  ci:
+    uses: compliance-framework/workflows/.github/workflows/ci-policies.yml@a94553bdc479fac47fbea7febbf57dcb615dbc87
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: read
+      security-events: write
+    secrets: inherit
+
+  notify:
+    needs: [ci]
+    if: failure()
+    uses: compliance-framework/workflows/.github/workflows/notify-failure.yml@a94553bdc479fac47fbea7febbf57dcb615dbc87
+    with:
+      # Must equal the ref notify-failure.yml is called at (a called workflow can't see it).
+      workflows-ref: a94553bdc479fac47fbea7febbf57dcb615dbc87
+    permissions:
+      actions: read
+      contents: read
+    secrets: inherit
