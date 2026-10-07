@@ -24,9 +24,7 @@ risk_templates := [{
 }]
 
 violation contains {"id": "default_branch_not_main"} if {
-	# DELIBERATE `opa fmt` ISSUE (W1-S0-T06): no spaces around "!=" below. Do NOT fix here.
-	# It proves the shared ci-policies.yml fails on formatting; the S1 adoption PR fixes it.
-	object.get(input, ["repository", "default_branch"], "")!="main"
+	object.get(input, ["repository", "default_branch"], "") != "main"
 }
 
 title := "Repository default branch is main"
