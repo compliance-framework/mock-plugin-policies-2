@@ -1,0 +1,6 @@
+lisa-design:
+- Commit 1 deliberately does NOT fix the `opa fmt` issue in policies/mock_default_branch.rego (nor its "DELIBERATE" comment or the README wording). The first CI run must fail in the opa job's fmt step with `required` failing, to prove the shared ci-policies.yml catches it. Self-review must not fix it; commit 2 runs `opa fmt -w policies` and removes the comment/README wording.
+- Both reusable workflows are pinned to the full SHA a94553bdc479fac47fbea7febbf57dcb615dbc87 (head of compliance-framework/workflows#5), not @v1, because the trial validates that unreleased ref. notify passes the same SHA as workflows-ref because a called workflow can't see its own ref.
+- Top-level `permissions: {}`; each job grants exactly the permissions the workflows README documents (ci: actions/contents/pull-requests read + security-events write for the nested osv-scanner; notify: actions/contents read).
+- pull_request lists types [opened, edited, synchronize, reopened] as in the workflows README example, so edited PR titles are re-checked by ci-common's pr-title job.
+- No concurrency group, no inputs on ci-policies (defaults: directory=policies, opa 1.14.1, regal 0.43.0), matching the documented thin caller.
