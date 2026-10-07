@@ -12,7 +12,7 @@ permissions: {}
 
 jobs:
   ci:
-    uses: compliance-framework/workflows/.github/workflows/ci-policies.yml@ra/w1-s1-t05b-repo-settings-workflow
+    uses: compliance-framework/workflows/.github/workflows/ci-policies.yml@main
     permissions:
       actions: read
       contents: read
@@ -22,17 +22,17 @@ jobs:
 
   release-checks:
     # Runs only on release-please-- PR branches; skipped (counts as passing) elsewhere.
-    uses: compliance-framework/workflows/.github/workflows/release-checks.yml@ra/w1-s1-t05b-repo-settings-workflow
+    uses: compliance-framework/workflows/.github/workflows/release-checks.yml@main
     permissions:
       contents: read
 
   notify:
     needs: [ci, release-checks]
     if: failure()
-    uses: compliance-framework/workflows/.github/workflows/notify-failure.yml@ra/w1-s1-t05b-repo-settings-workflow
+    uses: compliance-framework/workflows/.github/workflows/notify-failure.yml@main
     with:
       # Must equal the ref notify-failure.yml is called at (a called workflow can't see it).
-      workflows-ref: ra/w1-s1-t05b-repo-settings-workflow
+      workflows-ref: main
     permissions:
       actions: read
       contents: read
