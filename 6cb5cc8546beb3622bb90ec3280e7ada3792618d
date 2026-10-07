@@ -3,3 +3,9 @@ lisa-design:
 - Package compliance_framework.mock_default_branch (default branch must be "main") is chosen to differ from mock-plugin-policies-1's check.
 - Shape copied from plugin-github-settings-policies (risk_templates, violation, title/description/remarks, _test.rego), but uses v1 `violation contains ... if` (opa fmt canonical) instead of `violation[...] if`.
 - Makefile uses $(OPA) (the reference repo's `@OPA test` relies on a case-insensitive filesystem). No GitHub workflows added, by instruction.
+
+lisa-selfreview:
+pass 1 (strict): request_changes
+- [must-fix] REGO-META-001 policies/mock_default_branch.rego: no # METADATA block (title, description, custom.controls, custom.schedule)
+- [must-fix] REGO-INPUT-001 policies/mock_default_branch.rego violation: bare input.repository.default_branch; use object.get + test missing input
+- [nit] REGO-TEST-003 policies/mock_default_branch_test.rego: count(violation) > 0; assert exact violation set
