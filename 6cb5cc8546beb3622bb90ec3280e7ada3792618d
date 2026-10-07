@@ -1,0 +1,5 @@
+lisa-design:
+- DELIBERATE: policies/mock_default_branch.rego has exactly ONE `opa fmt` issue: `input.repository.default_branch!="main"` (no spaces around `!=`) in the violation rule. It proves the shared ci-policies.yml fails on formatting (W1-S0-T06 spec item 3). Do NOT fix it in this PR; the S1 adoption PR fixes it. Everything else is opa-fmt canonical (tabs), and `opa check --strict` + `opa test policies` pass.
+- Package compliance_framework.mock_default_branch (default branch must be "main") is chosen to differ from mock-plugin-policies-1's check.
+- Shape copied from plugin-github-settings-policies (risk_templates, violation, title/description/remarks, _test.rego), but uses v1 `violation contains ... if` (opa fmt canonical) instead of `violation[...] if`.
+- Makefile uses $(OPA) (the reference repo's `@OPA test` relies on a case-insensitive filesystem). No GitHub workflows added, by instruction.
