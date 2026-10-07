@@ -3,3 +3,7 @@ pass 1 fixes:
 - REGO-META-001: added package-scoped # METADATA (title, description, custom.controls [mock-ctrl-001], custom.schedule) to policies/mock_default_branch.rego
 - REGO-INPUT-001: violation now uses object.get(input, ["repository", "default_branch"], "") (missing input -> violation); added test_default_branch_violate_if_missing
 - REGO-TEST-003: failing tests assert violation == {{"id": "default_branch_not_main"}}
+
+lisa-design:
+- Update to the DELIBERATE fmt issue: after pass 1 the offending line is `object.get(input, ["repository", "default_branch"], "")!="main"` (still the only `opa fmt` diff; verified by formatting a copy: one line differs). A missing default_branch now counts as a violation.
+- METADATA custom.controls / custom.schedule hold mock values (mock-ctrl-001, "* * * * *").
