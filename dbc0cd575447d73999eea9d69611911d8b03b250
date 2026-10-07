@@ -4,3 +4,10 @@ lisa-design:
 - Top-level `permissions: {}`; each job grants exactly the permissions the workflows README documents (ci: actions/contents/pull-requests read + security-events write for the nested osv-scanner; notify: actions/contents read).
 - pull_request lists types [opened, edited, synchronize, reopened] as in the workflows README example, so edited PR titles are re-checked by ci-common's pr-title job.
 - No concurrency group, no inputs on ci-policies (defaults: directory=policies, opa 1.14.1, regal 0.43.0), matching the documented thin caller.
+
+lisa-selfreview:
+pass 1/4 (packs core, rego-policy): verdict approve, no fix-worthy findings.
+- Checked CORE-CI-001: both reusable workflows pinned by full SHA, top-level permissions: {}, no checkout in the caller; job permissions match the workflows README. actionlint v1.7.12 clean on ci.yml.
+- CORE-VERIFY-001 (opa fmt --list fails on policies/mock_default_branch.rego): intentional per lisa-design; not fixed in commit 1. opa check --strict and opa test (3/3) pass locally (opa 1.13.2).
+- CORE-DUP-001 considered and dismissed: the SHA appears in both `uses:` lines and in workflows-ref; `uses:` can't take expressions and the workflows README requires passing the same ref, so the duplication is unavoidable (comment explains it).
+- CORE-DOC-001 considered and dismissed: mock repo README needs no CI section for the trial; commit 2 updates the README's "deliberate" wording.
