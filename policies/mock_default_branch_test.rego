@@ -5,5 +5,9 @@ test_default_branch_main if {
 }
 
 test_default_branch_violate_if_not_main if {
-	count(violation) > 0 with input as {"repository": {"default_branch": "master"}}
+	violation == {{"id": "default_branch_not_main"}} with input as {"repository": {"default_branch": "master"}}
+}
+
+test_default_branch_violate_if_missing if {
+	violation == {{"id": "default_branch_not_main"}} with input as {"repository": {}}
 }
