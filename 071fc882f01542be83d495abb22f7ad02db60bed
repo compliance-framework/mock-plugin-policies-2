@@ -1,0 +1,4 @@
+lisa-design:
+- Only `closed` is added to pull_request.types in ci.yml; all existing types, comments and the v1.3.0 pins are unchanged (spec W1-S3-MOCK-CLOSED).
+- The extra closed-PR run is near-empty: the shared CI skips its jobs on closed PRs; notify-failure.yml (v1.3.0) uses the close to mark the needs-human card handled and close the CI incident.
+- `ci:` commit type keeps release-please from cutting a release.
