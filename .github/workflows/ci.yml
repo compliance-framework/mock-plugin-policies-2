@@ -4,7 +4,8 @@ on:
   pull_request:
     # edited: re-check the PR title (ci-common.yml's pr-title job) when it changes.
     # labeled, unlabeled: re-run release-checks (version-guard reads the PR's labels).
-    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+    # closed: notify marks the PR's needs-human card handled and closes its CI incident.
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled, closed]
   push:
     branches: [main]
 
